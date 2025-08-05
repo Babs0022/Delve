@@ -35,6 +35,7 @@ const synthesizeAnalysisPrompt = ai.definePrompt({
   output: {schema: SynthesizeAnalysisOutputSchema},
   prompt: `You are an expert researcher tasked with synthesizing research notes into a comprehensive analysis.
   Your analysis should be clear, concise, and supported by the provided sources. List the sources that were actually useful at the end.
+  Output the analysis in markdown format.
 
   Research Notes:
   {{researchNotes}}
@@ -44,7 +45,7 @@ const synthesizeAnalysisPrompt = ai.definePrompt({
   - {{this}}
   {{/each}}
 
-  Synthesized Analysis:`, // Removed superfluous 'Output the analysis in markdown format.' instruction
+  Synthesized Analysis:`,
 });
 
 const synthesizeAnalysisFlow = ai.defineFlow(
