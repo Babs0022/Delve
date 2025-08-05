@@ -6,16 +6,18 @@ export function useTypewriter(text: string, speed: number = 20) {
   const [displayedText, setDisplayedText] = useState('');
 
   useEffect(() => {
-    setDisplayedText('');
+    setDisplayedText(''); // Immediately clear for new text
     if (text) {
       let i = 0;
       const intervalId = setInterval(() => {
-        setDisplayedText(text.slice(0, i));
-        i++;
-        if (i > text.length) {
+        if (i < text.length) {
+          setDisplayedText(prev => prev + text[i]);
+          i++;
+        } else {
           clearInterval(intervalId);
         }
       }, speed);
+
       return () => clearInterval(intervalId);
     }
   }, [text, speed]);

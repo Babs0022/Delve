@@ -12,6 +12,7 @@
 
 import {ai} from '@/ai/genkit';
 import {z} from 'genkit';
+import {generate} from 'genkit';
 
 const SynthesizeAnalysisInputSchema = z.object({
   researchNotes: z.string().describe('The notes collected during the research process.'),
@@ -19,43 +20,31 @@ const SynthesizeAnalysisInputSchema = z.object({
 });
 export type SynthesizeAnalysisInput = z.infer<typeof SynthesizeAnalysisInputSchema>;
 
-const SynthesizeAnalysisOutputSchema = z.object({
-  analysis: z.string().describe('The synthesized analysis of the research findings.'),
-  sources: z.array(z.string()).describe('The URLs of the sources used in the analysis.'),
-});
-export type SynthesizeAnalysisOutput = z.infer<typeof SynthesizeAnalysisOutputSchema>;
 
-export async function synthesizeAnalysis(input: SynthesizeAnalysisInput): Promise<SynthesizeAnalysisOutput> {
-  return synthesizeAnalysisFlow(input);
-}
+export async function synthesizeAnalysisStream(input: SynthesizeAnalysisInput): Promise<AsyncGenerator<string>> {
+  const {stream} = await ai.generate({
+    model: 'googleai/gemini-2.0-flash',
+    prompt: `You are an expert researcher tasked with synthesizing research notes into a comprehensive analysis.
+    Your analysis should be clear, concise, and supported by the provided sources.
+    Output the analysis in markdown format.
 
-const synthesizeAnalysisPrompt = ai.definePrompt({
-  name: 'synthesizeAnalysisPrompt',
-  input: {schema: SynthesizeAnalysisInputSchema},
-  output: {schema: SynthesizeAnalysisOutputSchema},
-  prompt: `You are an expert researcher tasked with synthesizing research notes into a comprehensive analysis.
-  Your analysis should be clear, concise, and supported by the provided sources. List the sources that were actually useful at the end.
-  Output the analysis in markdown format.
+    Research Notes:
+    ${input.researchNotes}
 
-  Research Notes:
-  {{researchNotes}}
+    Sources:
+    ${input.sources.map(s => `- ${s}`).join('\n')}
 
-  Sources:
-  {{#each sources}}
-  - {{this}}
-  {{/each}}
+    Synthesized Analysis:`,
+    stream: true,
+  });
 
-  Synthesized Analysis:`,
-});
-
-const synthesizeAnalysisFlow = ai.defineFlow(
-  {
-    name: 'synthesizeAnalysisFlow',
-    inputSchema: SynthesizeAnalysisInputSchema,
-    outputSchema: SynthesizeAnalysisOutputSchema,
-  },
-  async input => {
-    const {output} = await synthesizeAnalysisPrompt(input);
-    return output!;
+  async function* contentStream(): AsyncGenerator<string> {
+    for await (const chunk of stream) {
+      if (chunk.content) {
+        yield chunk.content[0].text ?? '';
+      }
+    }
   }
-);
+
+  return contentStream();
+}

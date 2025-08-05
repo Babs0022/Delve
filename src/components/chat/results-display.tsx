@@ -2,7 +2,6 @@
 
 import { Button } from '@/components/ui/button';
 import { useToast } from '@/hooks/use-toast';
-import { useTypewriter } from '@/hooks/use-typewriter';
 import { Copy, RefreshCw, ThumbsDown, ThumbsUp, ExternalLink } from 'lucide-react';
 import { Separator } from '../ui/separator';
 import ReactMarkdown from 'react-markdown';
@@ -15,7 +14,6 @@ interface ResultsDisplayProps {
 
 export default function ResultsDisplay({ analysis, sources, onRegenerate }: ResultsDisplayProps) {
   const { toast } = useToast();
-  const displayedAnalysis = useTypewriter(analysis, 10);
 
   const handleCopy = () => {
     navigator.clipboard.writeText(analysis);
@@ -30,7 +28,7 @@ export default function ResultsDisplay({ analysis, sources, onRegenerate }: Resu
     <div className="space-y-4">
       <h3 className="font-semibold text-lg font-headline">Synthesized Analysis:</h3>
       <div className="prose prose-sm max-w-none dark:prose-invert">
-        <ReactMarkdown>{displayedAnalysis}</ReactMarkdown>
+        <ReactMarkdown>{analysis}</ReactMarkdown>
       </div>
       
       {sources.length > 0 && (
