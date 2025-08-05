@@ -1,12 +1,13 @@
 'use client';
 import { Bot, User, Loader2 } from 'lucide-react';
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import { Card, CardContent } from '@/components/ui/card';
 import { cn } from '@/lib/utils';
 import type { Message } from '@/lib/types';
 import PlanApproval from './plan-approval';
 import ExecutionLog from './execution-log';
 import ResultsDisplay from './results-display';
+import ReactMarkdown from 'react-markdown';
 
 interface ChatMessageProps {
   message: Message;
@@ -22,13 +23,13 @@ export default function ChatMessage({ message }: ChatMessageProps) {
         return (
           <div className="flex items-center gap-2 text-muted-foreground">
             <Loader2 className="w-5 h-5 animate-spin" />
-            <span>Thinking...</span>
+            <span>{content || 'Thinking...'}</span>
           </div>
         );
       case 'error':
         return <p className="text-destructive-foreground">{content}</p>;
       case 'plan':
-        return <PlanApproval plan={data.plan} onDecision={data.onDecision} />;
+        return <PlanApproval plan={data.plan} onDecision={data.onDecision} decisionMade={data.decisionMade} />;
       case 'logs':
         return <ExecutionLog logs={data.logs} />;
       case 'result':
@@ -36,7 +37,7 @@ export default function ChatMessage({ message }: ChatMessageProps) {
       case 'text':
       default:
         if (typeof content === 'string') {
-          return <p className="whitespace-pre-wrap">{content}</p>;
+          return <ReactMarkdown className="prose prose-sm max-w-none dark:prose-invert prose-p:whitespace-pre-wrap">{content}</ReactMarkdown>;
         }
         return content;
     }

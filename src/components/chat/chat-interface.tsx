@@ -6,15 +6,13 @@ import { Input } from '@/components/ui/input';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { DelveLogo } from '@/components/icons';
 import { ArrowUp, Loader2 } from 'lucide-react';
-import type { Message } from '@/lib/types';
+import type { Message, ResearchPlan } from '@/lib/types';
 import ChatMessage from './chat-message';
-import PlanApproval from './plan-approval';
-import ExecutionLog from './execution-log';
-import ResultsDisplay from './results-display';
 import { startResearch, executeResearch } from '@/app/actions';
 import { useToast } from '@/hooks/use-toast';
 
 let messageIdCounter = 0;
+const generateUniqueId = () => `${Date.now()}-${messageIdCounter++}`;
 
 export default function ChatInterface() {
   const [messages, setMessages] = useState<Message[]>([
@@ -40,7 +38,7 @@ export default function ChatInterface() {
   }, [messages]);
 
   const addMessage = (message: Omit<Message, 'id'>) => {
-    const newMessage = { ...message, id: `${Date.now()}-${messageIdCounter++}` };
+    const newMessage = { ...message, id: generateUniqueId() };
     setMessages(prev => [...prev, newMessage]);
     return newMessage.id;
   };
@@ -51,7 +49,15 @@ export default function ChatInterface() {
     );
   };
 
-  const handlePlanDecision = async (decision: 'approve' | 'deny', plan: string[]) => {
+  const handlePlanDecision = async (decision: 'approve' | 'deny', plan: ResearchPlan) => {
+    const latestMessage = messages[messages.length - 1];
+    if (latestMessage?.type === 'plan') {
+        updateMessage(latestMessage.id, {
+            ...latestMessage,
+            data: { ...latestMessage.data, plan, decisionMade: true }
+        });
+    }
+
     if (decision === 'deny') {
       addMessage({
         role: 'agent',
@@ -71,9 +77,10 @@ export default function ChatInterface() {
     const logMessageId = addMessage({
       role: 'agent',
       type: 'loading',
-      content: null,
+      content: 'Executing plan...',
       data: { logs: [] }
     });
+    setIsLoading(true);
 
     const result = await executeResearch(plan);
 
@@ -108,7 +115,7 @@ export default function ChatInterface() {
     setInputValue('');
     setIsLoading(true);
 
-    const loadingId = addMessage({ role: 'agent', type: 'loading', content: null });
+    const loadingId = addMessage({ role: 'agent', type: 'loading', content: 'Generating plan...' });
 
     const result = await startResearch(query);
 
@@ -124,7 +131,7 @@ export default function ChatInterface() {
       content: 'Generated a research plan. Please review and approve.',
       data: { plan: result.plan, onDecision: (decision: 'approve' | 'deny') => handlePlanDecision(decision, result.plan) },
     });
-    // Don't set isLoading to false here, as the flow continues in handlePlanDecision
+    setIsLoading(false); // Let user approve/deny
   };
 
   return (

@@ -16,8 +16,16 @@ const GenerateResearchPlanInputSchema = z.object({
 });
 export type GenerateResearchPlanInput = z.infer<typeof GenerateResearchPlanInputSchema>;
 
+const ResearchStepSchema = z.object({
+  step_number: z.number().describe('The step number in the research plan.'),
+  step_title: z.string().describe('The title of the research step.'),
+  step_description: z.string().describe('A detailed description of the research step.'),
+  expected_output: z.string().describe('The expected output or deliverable for this step.'),
+});
+
 const GenerateResearchPlanOutputSchema = z.object({
-  plan: z.string().describe('The step-by-step research plan.'),
+  title: z.string().describe('The title of the overall research plan.'),
+  steps: z.array(ResearchStepSchema).describe('The detailed, step-by-step research plan.'),
 });
 export type GenerateResearchPlanOutput = z.infer<typeof GenerateResearchPlanOutputSchema>;
 
@@ -29,7 +37,7 @@ const prompt = ai.definePrompt({
   name: 'generateResearchPlanPrompt',
   input: {schema: GenerateResearchPlanInputSchema},
   output: {schema: GenerateResearchPlanOutputSchema},
-  prompt: `You are an AI research assistant. Your job is to create a detailed, step-by-step research plan based on the user's query.
+  prompt: `You are an AI research assistant. Your job is to create a detailed, step-by-step research plan based on the user's query. The plan should be broken down into clear steps, each with a title, description, and expected output.
 
 User Query: {{{query}}}
 

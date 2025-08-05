@@ -1,25 +1,18 @@
 'use server';
 
-import { generateResearchPlan } from '@/ai/flows/research-planner-agent';
+import { GenerateResearchPlanOutput, generateResearchPlan } from '@/ai/flows/research-planner-agent';
 import { researchExecutorAgent } from '@/ai/flows/research-executor-agent';
 import { synthesizeAnalysis } from '@/ai/flows/synthesize-analysis';
 
-export async function startResearch(query: string): Promise<{ plan: string[] } | { error: string }> {
+export async function startResearch(query: string): Promise<{ plan: GenerateResearchPlanOutput } | { error: string }> {
   try {
-    const { plan } = await generateResearchPlan({ query });
-    // The model often returns a numbered list as a single string. We need to parse it.
-    const planSteps = plan
-      .split('\n')
-      .map(line => line.trim())
-      .filter(line => /^\d+\./.test(line))
-      .map(line => line.replace(/^\d+\.\s*/, ''));
-
-    if (planSteps.length === 0) {
-      // Fallback if parsing fails
-      return { plan: [plan] };
+    const plan = await generateResearchPlan({ query });
+    
+    if (!plan.steps || plan.steps.length === 0) {
+      return { error: 'The generated plan has no steps. Please try a different query.' };
     }
     
-    return { plan: planSteps };
+    return { plan };
   } catch (e) {
     console.error(e);
     return { error: 'Failed to generate a research plan. Please try again.' };
@@ -27,14 +20,12 @@ export async function startResearch(query: string): Promise<{ plan: string[] } |
 }
 
 export async function executeResearch(
-  plan: string[]
+  plan: GenerateResearchPlanOutput
 ): Promise<{ logs: string[]; analysis: string; sources: string[] } | { error:string }> {
   try {
-    // This is a simplified execution. A real agent would use tools here.
-    const researchNotes = `Based on the plan: ${plan.join(', ')}, I have gathered the following information...`;
-    const sources = plan.map((_, i) => `https://example.com/source${i + 1}`);
-
-    const executionResult = await researchExecutorAgent({ researchPlan: plan });
+    const planStepsAsStrings = plan.steps.map(step => `${step.step_title}: ${step.step_description}`);
+    
+    const executionResult = await researchExecutorAgent({ researchPlan: planStepsAsStrings });
 
     const synthesisResult = await synthesizeAnalysis({
       researchNotes: executionResult.analysis,
