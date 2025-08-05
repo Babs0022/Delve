@@ -21,7 +21,7 @@ export type SynthesizeAnalysisInput = z.infer<typeof SynthesizeAnalysisInputSche
 
 
 export async function synthesizeAnalysisStream(input: SynthesizeAnalysisInput): Promise<AsyncGenerator<string>> {
-  const {stream} = await ai.generate({
+  const {stream} = ai.generate({
     model: 'googleai/gemini-2.0-flash',
     prompt: `You are an expert researcher tasked with synthesizing research notes into a comprehensive analysis.
     Your analysis should be clear, concise, and supported by the provided sources.
