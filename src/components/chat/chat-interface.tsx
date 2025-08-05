@@ -10,6 +10,7 @@ import type { Message, ResearchPlan } from '@/lib/types';
 import ChatMessage from './chat-message';
 import { startResearch, executeResearch } from '@/app/actions';
 import { useToast } from '@/hooks/use-toast';
+import { useTypewriter } from '@/hooks/use-typewriter';
 
 const generateUniqueId = () => `${Date.now()}-${Math.random()}`;
 
@@ -45,23 +46,6 @@ export default function ChatInterface() {
   const updateMessage = (id: string, newContent: Partial<Message>) => {
     setMessages(prev =>
       prev.map(msg => (msg.id === id ? { ...msg, ...newContent } : msg))
-    );
-  };
-  
-  const appendToMessage = (id: string, chunk: string) => {
-    setMessages(prev =>
-      prev.map(msg => {
-        if (msg.id === id && msg.type === 'result') {
-          return {
-            ...msg,
-            data: {
-              ...msg.data,
-              analysis: (msg.data.analysis || '') + chunk
-            }
-          };
-        }
-        return msg;
-      })
     );
   };
 
@@ -110,17 +94,12 @@ export default function ChatInterface() {
             data: { logs: result.logs }
         });
         
-        const resultMessageId = addMessage({
+        addMessage({
             role: 'agent',
             type: 'result',
             content: 'Final analysis is ready.',
-            data: { analysis: '', sources: result.sources, onRegenerate: () => handleSubmit(undefined, inputValue) }
+            data: { analysis: result.analysis, sources: result.sources, onRegenerate: () => handleSubmit(undefined, inputValue) }
         });
-
-        // Handle the stream
-        for await (const chunk of result.analysisStream) {
-            appendToMessage(resultMessageId, chunk);
-        }
     }
     setIsLoading(false);
   };

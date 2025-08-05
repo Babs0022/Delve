@@ -3,9 +3,7 @@
 /**
  * @fileOverview This file defines the Genkit flow for synthesizing research findings into a comprehensive analysis.
  *
- * The flow takes research notes and sources as input and generates a synthesized analysis with
- * streamed text and a list of sources. The agent streams the final, synthesized analysis with
- * streamed text and sources list.
+ * The flow takes research notes and sources as input and generates a synthesized analysis.
  *
  * @requires genkit
  */
@@ -20,10 +18,27 @@ const SynthesizeAnalysisInputSchema = z.object({
 export type SynthesizeAnalysisInput = z.infer<typeof SynthesizeAnalysisInputSchema>;
 
 
-export async function synthesizeAnalysisStream(input: SynthesizeAnalysisInput): Promise<AsyncGenerator<string>> {
-  const {stream, response} = ai.generateStream({
-    model: 'googleai/gemini-2.0-flash',
-    prompt: `You are an expert researcher tasked with synthesizing research notes into a comprehensive analysis.
+const SynthesizeAnalysisOutputSchema = z.object({
+    analysis: z.string().describe('The synthesized analysis in markdown format.'),
+});
+export type SynthesizeAnalysisOutput = z.infer<typeof SynthesizeAnalysisOutputSchema>;
+
+
+export async function synthesizeAnalysis(input: SynthesizeAnalysisInput): Promise<SynthesizeAnalysisOutput> {
+    return synthesizeAnalysisFlow(input);
+}
+
+
+const synthesizeAnalysisFlow = ai.defineFlow(
+    {
+        name: 'synthesizeAnalysisFlow',
+        inputSchema: SynthesizeAnalysisInputSchema,
+        outputSchema: SynthesizeAnalysisOutputSchema,
+    },
+    async (input) => {
+        const {output} = await ai.generate({
+            model: 'googleai/gemini-2.0-flash',
+            prompt: `You are an expert researcher tasked with synthesizing research notes into a comprehensive analysis.
     Your analysis should be clear, concise, and supported by the provided sources.
     Output the analysis in markdown format.
 
@@ -34,19 +49,10 @@ export async function synthesizeAnalysisStream(input: SynthesizeAnalysisInput): 
     ${input.sources.map(s => `- ${s}`).join('\n')}
 
     Synthesized Analysis:`,
-  });
-
-  async function* contentStream(): AsyncGenerator<string> {
-    for await (const chunk of stream) {
-      const text = chunk.text;
-      if (text) {
-        yield text;
-      }
+            output: {
+                schema: SynthesizeAnalysisOutputSchema,
+            },
+        });
+        return output!;
     }
-    // It's important to await the full response to ensure the flow doesn't exit prematurely
-    // and to catch any potential errors during generation.
-    await response;
-  }
-
-  return contentStream();
-}
+);
