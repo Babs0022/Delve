@@ -21,7 +21,7 @@ export type SynthesizeAnalysisInput = z.infer<typeof SynthesizeAnalysisInputSche
 
 
 export async function synthesizeAnalysisStream(input: SynthesizeAnalysisInput): Promise<AsyncGenerator<string>> {
-  const {stream} = ai.generate({
+  const {stream, response} = ai.generateStream({
     model: 'googleai/gemini-2.0-flash',
     prompt: `You are an expert researcher tasked with synthesizing research notes into a comprehensive analysis.
     Your analysis should be clear, concise, and supported by the provided sources.
@@ -34,7 +34,6 @@ export async function synthesizeAnalysisStream(input: SynthesizeAnalysisInput): 
     ${input.sources.map(s => `- ${s}`).join('\n')}
 
     Synthesized Analysis:`,
-    stream: true,
   });
 
   async function* contentStream(): AsyncGenerator<string> {
@@ -44,6 +43,9 @@ export async function synthesizeAnalysisStream(input: SynthesizeAnalysisInput): 
         yield text;
       }
     }
+    // It's important to await the full response to ensure the flow doesn't exit prematurely
+    // and to catch any potential errors during generation.
+    await response;
   }
 
   return contentStream();
