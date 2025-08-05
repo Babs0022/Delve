@@ -14,6 +14,8 @@ import ResultsDisplay from './results-display';
 import { startResearch, executeResearch } from '@/app/actions';
 import { useToast } from '@/hooks/use-toast';
 
+let messageIdCounter = 0;
+
 export default function ChatInterface() {
   const [messages, setMessages] = useState<Message[]>([
     {
@@ -38,7 +40,7 @@ export default function ChatInterface() {
   }, [messages]);
 
   const addMessage = (message: Omit<Message, 'id'>) => {
-    const newMessage = { ...message, id: Date.now().toString() };
+    const newMessage = { ...message, id: `${Date.now()}-${messageIdCounter++}` };
     setMessages(prev => [...prev, newMessage]);
     return newMessage.id;
   };
@@ -138,8 +140,8 @@ export default function ChatInterface() {
       </header>
       <ScrollArea className="flex-1 p-4" ref={scrollAreaRef}>
         <div className="max-w-3xl mx-auto w-full space-y-6">
-          {messages.map(msg => (
-            <ChatMessage key={msg.id} message={msg} />
+          {messages.map((msg, index) => (
+            <ChatMessage key={msg.id || index} message={msg} />
           ))}
           {isLoading && messages[messages.length-1]?.type !== 'plan' && <ChatMessage message={{ id: 'temp-loading', role: 'agent', type: 'loading', content: null }} />}
         </div>
