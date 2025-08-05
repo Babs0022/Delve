@@ -40,8 +40,8 @@ export async function synthesizeAnalysisStream(input: SynthesizeAnalysisInput): 
 
   async function* contentStream(): AsyncGenerator<string> {
     for await (const chunk of stream) {
-      if (chunk.content) {
-        yield chunk.content[0].text ?? '';
+      if (chunk.text) {
+        yield chunk.text;
       }
     }
   }
