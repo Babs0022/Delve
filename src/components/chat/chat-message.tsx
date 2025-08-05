@@ -4,31 +4,42 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Card, CardContent } from '@/components/ui/card';
 import { cn } from '@/lib/utils';
 import type { Message } from '@/lib/types';
+import PlanApproval from './plan-approval';
+import ExecutionLog from './execution-log';
+import ResultsDisplay from './results-display';
 
 interface ChatMessageProps {
   message: Message;
 }
 
 export default function ChatMessage({ message }: ChatMessageProps) {
-  const { role, content, type } = message;
+  const { role, content, type, data } = message;
   const isAgent = role === 'agent';
 
   const renderContent = () => {
-    if (type === 'loading') {
-      return (
-        <div className="flex items-center gap-2 text-muted-foreground">
-          <Loader2 className="w-5 h-5 animate-spin" />
-          <span>Thinking...</span>
-        </div>
-      );
+    switch (type) {
+      case 'loading':
+        return (
+          <div className="flex items-center gap-2 text-muted-foreground">
+            <Loader2 className="w-5 h-5 animate-spin" />
+            <span>Thinking...</span>
+          </div>
+        );
+      case 'error':
+        return <p className="text-destructive-foreground">{content}</p>;
+      case 'plan':
+        return <PlanApproval plan={data.plan} onDecision={data.onDecision} />;
+      case 'logs':
+        return <ExecutionLog logs={data.logs} />;
+      case 'result':
+        return <ResultsDisplay analysis={data.analysis} sources={data.sources} onRegenerate={data.onRegenerate} />;
+      case 'text':
+      default:
+        if (typeof content === 'string') {
+          return <p className="whitespace-pre-wrap">{content}</p>;
+        }
+        return content;
     }
-    if(type === 'error'){
-        return <p className="text-destructive-foreground">{content}</p>
-    }
-    if (typeof content === 'string') {
-      return <p className="whitespace-pre-wrap">{content}</p>;
-    }
-    return content;
   };
 
   return (

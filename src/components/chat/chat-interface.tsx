@@ -81,17 +81,17 @@ export default function ChatInterface() {
         updateMessage(logMessageId, { type: 'error', content: result.error });
         toast({ title: "Execution Error", description: result.error, variant: 'destructive' });
     } else {
-        updateMessage(logMessageId, { 
+        updateMessage(logMessageId, {
             type: 'logs',
-            content: <ExecutionLog logs={result.logs} />,
+            content: 'Execution complete. See logs and results below.',
             data: { logs: result.logs }
         });
         
         addMessage({
             role: 'agent',
             type: 'result',
-            content: <ResultsDisplay analysis={result.analysis} sources={result.sources} onRegenerate={() => handleSubmit(undefined, inputValue)} />,
-            data: { analysis: result.analysis, sources: result.sources }
+            content: 'Final analysis is ready.',
+            data: { analysis: result.analysis, sources: result.sources, onRegenerate: () => handleSubmit(undefined, inputValue) }
         });
     }
     setIsLoading(false);
@@ -121,13 +121,8 @@ export default function ChatInterface() {
 
     updateMessage(loadingId, {
       type: 'plan',
-      content: (
-        <PlanApproval
-          plan={result.plan}
-          onDecision={(decision) => handlePlanDecision(decision, result.plan)}
-        />
-      ),
-      data: { plan: result.plan },
+      content: 'Generated a research plan. Please review and approve.',
+      data: { plan: result.plan, onDecision: (decision: 'approve' | 'deny') => handlePlanDecision(decision, result.plan) },
     });
     // Don't set isLoading to false here, as the flow continues in handlePlanDecision
   };
@@ -140,8 +135,8 @@ export default function ChatInterface() {
       </header>
       <ScrollArea className="flex-1 p-4" ref={scrollAreaRef}>
         <div className="max-w-3xl mx-auto w-full space-y-6">
-          {messages.map((msg, index) => (
-            <ChatMessage key={msg.id || index} message={msg} />
+          {messages.map((msg) => (
+            <ChatMessage key={msg.id} message={msg} />
           ))}
           {isLoading && messages[messages.length-1]?.type !== 'plan' && <ChatMessage message={{ id: 'temp-loading', role: 'agent', type: 'loading', content: null }} />}
         </div>
