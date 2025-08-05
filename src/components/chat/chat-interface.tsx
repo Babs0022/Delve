@@ -138,7 +138,6 @@ export default function ChatInterface() {
           {messages.map((msg) => (
             <ChatMessage key={msg.id} message={msg} />
           ))}
-          {isLoading && messages[messages.length-1]?.type !== 'plan' && <ChatMessage message={{ id: 'temp-loading', role: 'agent', type: 'loading', content: null }} />}
         </div>
       </ScrollArea>
       <footer className="p-4 bg-card border-t">
