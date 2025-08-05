@@ -12,7 +12,6 @@
 
 import {ai} from '@/ai/genkit';
 import {z} from 'genkit';
-import {generate} from 'genkit';
 
 const SynthesizeAnalysisInputSchema = z.object({
   researchNotes: z.string().describe('The notes collected during the research process.'),
@@ -40,8 +39,9 @@ export async function synthesizeAnalysisStream(input: SynthesizeAnalysisInput): 
 
   async function* contentStream(): AsyncGenerator<string> {
     for await (const chunk of stream) {
-      if (chunk.text) {
-        yield chunk.text;
+      const text = chunk.text;
+      if (text) {
+        yield text;
       }
     }
   }
