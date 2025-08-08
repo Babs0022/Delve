@@ -1,0 +1,177 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 220 10% 3.9%; /* Dark */
+    --foreground: 180 10% 95%; /* Light */
+    --card: 220 10% 3.9%;
+    --card-foreground: 180 10% 95%;
+    --popover: 220 10% 3.9%;
+    --popover-foreground: 180 10% 95%;
+    --primary: 271 91% 65%; /* Purple */
+    --primary-foreground: 220 10% 3.9%; /* Dark text on purple */
+    --secondary: 220 10% 15%;
+    --secondary-foreground: 180 10% 70%;
+    --muted: 220 10% 15%;
+    --muted-foreground: 180 10% 70%;
+    --accent: 271 91% 65%; /* Purple */
+    --accent-foreground: 220 10% 3.9%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 180 10% 95%;
+    --border: 220 10% 25%;
+    --input: 220 10% 20%;
+    --ring: 271 91% 65%; /* Purple */
+    --radius: 0.5rem;
+    --font-inter: "Inter", sans-serif;
+    --font-instrument-serif: "Instrument Serif", serif; /* Add Instrument Serif font variable */
+    --heading-weight: 300; /* Heading weight */
+  }
+
+  /* Light mode variables */
+  :root[data-theme="light"] {
+    --background: 0 0% 100%; /* White */
+    --foreground: 222.2 84% 4.9%; /* Dark text */
+    --card: 0 0% 100%;
+    --card-foreground: 222.2 84% 4.9%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 222.2 84% 4.9%;
+    --primary: 271 91% 65%; /* Purple */
+    --primary-foreground: 0 0% 100%; /* White text on purple */
+    --secondary: 210 40% 96.1%; /* Light gray */
+    --secondary-foreground: 222.2 47.4% 11.2%; /* Darker gray */
+    --muted: 210 40% 96.1%;
+    --muted-foreground: 215.4 16.3% 46.9%;
+    --accent: 271 91% 65%; /* Purple */
+    --accent-foreground: 222.2 84% 4.9%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 214.3 31.8% 91.4%;
+    --input: 0 0% 100%;
+    --ring: 271 91% 65%; /* Purple */
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground font-sans;
+    /* Optimize text rendering */
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+    font-variant-ligatures: contextual;
+    line-height: 1.6;
+  }
+
+  /* Typography improvements */
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: var(--font-instrument-serif); /* Update heading font-family */
+    font-weight: var(--heading-weight) !important; /* Use variable for font-weight */
+    line-height: 1.2;
+    letter-spacing: -0.005em;
+  }
+
+  h1 {
+    font-size: clamp(2.5rem, 5vw, 4.5rem); /* max ~72px; close to your “70.5” */
+    font-weight: var(--heading-weight) !important; /* Use variable for font-weight */
+    letter-spacing: -0.01em;
+  }
+
+  h2 {
+    font-size: clamp(2rem, 4vw, 3.5rem);
+    font-weight: var(--heading-weight) !important; /* Use variable for font-weight */
+    letter-spacing: -0.008em;
+  }
+
+  h3 {
+    font-size: clamp(1.5rem, 3vw, 2.25rem);
+    font-weight: var(--heading-weight) !important; /* Use variable for font-weight */
+    letter-spacing: -0.005em;
+  }
+
+  p {
+    line-height: 1.7;
+    font-weight: 400;
+  }
+
+  /* Improve focus visibility for accessibility */
+  *:focus-visible {
+    outline: 2px solid hsl(var(--ring));
+    outline-offset: 2px;
+  }
+}
+
+html {
+  scroll-behavior: smooth;
+  /* Prevent layout shift */
+  scroll-padding-top: 80px;
+}
+
+/* Optimize images for Core Web Vitals */
+img {
+  max-width: 100%;
+  height: auto;
+  /* Prevent layout shift */
+  aspect-ratio: attr(width) / attr(height);
+}
+
+/* Custom scrollbar with better performance */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: hsl(var(--background));
+}
+
+::-webkit-scrollbar-thumb {
+  background: #a855f7;
+  border-radius: 4px;
+  /* Add smooth transitions */
+  transition: background-color 0.2s ease;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #9333ea;
+}
+
+/* Reduce motion for users who prefer it */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Performance optimizations */
+.will-change-transform {
+  will-change: transform;
+}
+
+.will-change-opacity {
+  will-change: opacity;
+}
+
+/* Contain layout shifts */
+.contain-layout {
+  contain: layout;
+}
+
+.contain-paint {
+  contain: paint;
+}
