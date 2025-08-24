@@ -84,13 +84,6 @@ export function Header({ isMenuOpen, setIsMenuOpen }: HeaderProps) {
             Tools
           </a>
           <a
-            href="#comparison"
-            className="text-gray-600 hover:text-purple-600 transition-colors font-medium text-sm"
-            onClick={() => handleNavClick("comparison")}
-          >
-            Comparison
-          </a>
-          <a
             href="#solutions"
             className="text-gray-600 hover:text-purple-600 transition-colors font-medium text-sm"
             onClick={() => handleNavClick("solutions")}
@@ -172,13 +165,6 @@ export function Header({ isMenuOpen, setIsMenuOpen }: HeaderProps) {
               onClick={() => handleNavClick("tools")}
             >
               Tools
-            </a>
-            <a
-              href="#comparison"
-              className="block text-gray-600 hover:text-purple-600 transition-colors font-medium"
-              onClick={() => handleNavClick("comparison")}
-            >
-              Comparison
             </a>
             <a
               href="#solutions"

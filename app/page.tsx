@@ -10,7 +10,7 @@ import { CopilotShowcase } from "./components/copilot-showcase"
 import { SpecializedTools } from "./components/specialized-tools"
 import { ComparisonTable } from "./components/comparison-table"
 import { UseCases } from "./components/use-cases"
-import { Testimonials } from "./components/testimonials" // Import the new component
+import { Testimonials } from "./components/testimonials"
 import { FAQ } from "./components/faq"
 import { FinalCTA } from "./components/final-cta"
 import { Footer } from "./components/footer"
@@ -86,7 +86,7 @@ export default function LandingPage() {
           <SpecializedTools />
           <ComparisonTable />
           <UseCases />
-          <Testimonials /> {/* Add the new Testimonials component here */}
+          <Testimonials />
           {/* The Pricing section is now on its own page */}
           <FAQ />
           <FinalCTA />

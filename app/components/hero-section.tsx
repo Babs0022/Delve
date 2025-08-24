@@ -74,41 +74,6 @@ export function HeroSection({ y }: HeroSectionProps) {
             </Button>
           </div>
         </motion.div>
-
-        <motion.div
-          initial={{ opacity: 0, y: 50 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1, delay: 0.3 }}
-          className="relative max-w-5xl mx-auto"
-        >
-          <figure className="bg-white/80 backdrop-blur-sm border border-gray-200/50 rounded-2xl p-6 modern-shadow-lg">
-            <div className="bg-gray-50/50 rounded-lg p-6 font-mono text-sm">
-              <div className="flex items-center space-x-2 mb-4" aria-label="AI Copilot interface">
-                <div className="w-3 h-3 bg-red-500 rounded-full" aria-hidden="true" />
-                <div className="w-3 h-3 bg-yellow-500 rounded-full" aria-hidden="true" />
-                <div className="w-3 h-3 bg-green-500 rounded-full" aria-hidden="true" />
-                <span className="text-gray-600 ml-4 font-medium">KorbinAI Copilot</span>
-              </div>
-              <div className="space-y-3">
-                <div className="text-blue-600 font-medium">
-                  👤 User: I need to launch a SaaS product but don't know where to start
-                </div>
-                <div className="text-purple-600 font-medium">
-                  🤖 Korbin: I'll help you create a comprehensive launch strategy. Let me break this down:
-                </div>
-                <div className="text-gray-500 ml-4">✨ Analyzing market positioning...</div>
-                <div className="text-gray-500 ml-4">📊 Creating go-to-market framework...</div>
-                <div className="text-gray-500 ml-4">🎯 Developing content strategy...</div>
-                <div className="text-purple-600 font-medium">
-                  ✅ Complete launch roadmap ready with actionable steps
-                </div>
-              </div>
-            </div>
-            <figcaption className="sr-only">
-              Example of KorbinAI Copilot providing strategic guidance for SaaS product launch
-            </figcaption>
-          </figure>
-        </motion.div>
       </div>
     </section>
   )
