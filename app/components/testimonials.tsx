@@ -20,7 +20,7 @@ export function Testimonials() {
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2 }}
-          className="max-w-2xl mx-auto bg-secondary/50 backdrop-blur-sm rounded-2xl border border-border p-6 shadow-2xl"
+          className="max-w-2xl mx-auto glass-effect rounded-2xl p-6 modern-shadow hover-lift"
         >
           <Image
             src="/testimonials/alex-feedback.jpeg"
@@ -30,7 +30,7 @@ export function Testimonials() {
             layout="responsive"
             className="rounded-lg"
           />
-          <p className="mt-6 text-muted-foreground text-sm font-light">
+          <p className="mt-6 text-muted-foreground text-sm font-normal">
             Feedback from Alex, a KorbinAI user, praising the platform's image generation capabilities.
           </p>
         </motion.div>

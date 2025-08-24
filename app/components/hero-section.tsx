@@ -1,7 +1,7 @@
 "use client"
 
 import { motion } from "framer-motion"
-import { ArrowRight, Sparkles } from 'lucide-react'
+import { ArrowRight, Sparkles } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { trackEvent } from "@/components/analytics"
 
@@ -19,31 +19,31 @@ export function HeroSection({ y }: HeroSectionProps) {
   }
 
   return (
-    <section className="relative min-h-screen flex items-center justify-center pt-20 overflow-hidden">
-      <div className="absolute inset-0 bg-gradient-to-br from-background via-secondary to-background" />
-      <motion.div style={{ y }} className="absolute inset-0 opacity-30" aria-hidden="true">
-        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-purple-500/20 rounded-full blur-3xl" />
-        <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-purple-700/20 rounded-full blur-3xl" />
-      </motion.div>
+    <section className="relative min-h-screen flex items-center justify-center pt-20 overflow-hidden bg-gradient-to-br from-background via-background to-purple-950/20">
+      <div className="absolute inset-0">
+        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-purple-500/10 rounded-full blur-3xl animate-pulse" />
+        <div
+          className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-purple-700/10 rounded-full blur-3xl animate-pulse"
+          style={{ animationDelay: "1s" }}
+        />
+      </div>
 
       <div className="container mx-auto px-4 text-center relative z-10">
         <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8 }}>
           <div className="flex items-center justify-center mb-8">
-            <div className="bg-gradient-to-r from-purple-500/20 to-purple-700/20 backdrop-blur-sm border border-purple-500/30 rounded-full px-6 py-3 flex items-center space-x-2">
+            <div className="glass-effect rounded-full px-6 py-3 flex items-center space-x-2">
               <Sparkles className="w-5 h-5 text-purple-400" />
               <span className="text-purple-400 font-medium text-sm">Powered by Advanced AI Frameworks</span>
             </div>
           </div>
 
-          <h1 className="text-4xl md:text-6xl lg:text-7xl xl:text-8xl font-bold mb-8 leading-[0.9] tracking-tight">
-            <span className="bg-gradient-to-r from-purple-400 to-purple-600 bg-clip-text text-transparent">
-              An AI Assistant
-            </span>
+          <h1 className="text-4xl md:text-6xl lg:text-7xl xl:text-8xl font-bold mb-8 leading-[0.85] tracking-tight">
+            <span className="gradient-text">An AI Assistant</span>
             <br />
             That Actually Gets It
           </h1>
 
-          <p className="text-lg md:text-xl lg:text-2xl text-muted-foreground mb-6 max-w-4xl mx-auto leading-relaxed font-light">
+          <p className="text-lg md:text-xl lg:text-2xl text-muted-foreground mb-6 max-w-4xl mx-auto leading-relaxed font-normal">
             Your most resourceful partner for{" "}
             <span className="text-purple-400 font-medium">
               brainstorming, coding, research, content creation, and strategic planning.
@@ -51,7 +51,7 @@ export function HeroSection({ y }: HeroSectionProps) {
             <br />
             Built to understand what you need before you even ask.
           </p>
-          <p className="text-base md:text-lg text-muted-foreground mb-10 font-light">
+          <p className="text-base md:text-lg text-muted-foreground mb-10 font-normal">
             Democratizing the creation process for everyone, everywhere.
           </p>
 
@@ -59,7 +59,7 @@ export function HeroSection({ y }: HeroSectionProps) {
             <Button
               asChild
               size="lg"
-              className="bg-gradient-to-r from-purple-500 to-purple-700 hover:from-purple-600 hover:to-purple-800 text-base md:text-lg px-8 py-4 h-14 font-medium"
+              className="bg-gradient-to-r from-purple-500 to-purple-700 hover:from-purple-600 hover:to-purple-800 text-base md:text-lg px-8 py-4 h-14 font-medium hover-lift modern-shadow"
             >
               <a
                 href="https://app.korbinai.com"
@@ -81,8 +81,8 @@ export function HeroSection({ y }: HeroSectionProps) {
           transition={{ duration: 1, delay: 0.3 }}
           className="relative max-w-5xl mx-auto"
         >
-          <figure className="bg-secondary/50 backdrop-blur-sm rounded-2xl border border-border p-6 shadow-2xl">
-            <div className="bg-background rounded-lg p-6 font-mono text-sm">
+          <figure className="glass-effect rounded-2xl p-6 modern-shadow">
+            <div className="bg-background/80 rounded-lg p-6 font-mono text-sm">
               <div className="flex items-center space-x-2 mb-4" aria-label="AI Copilot interface">
                 <div className="w-3 h-3 bg-red-500 rounded-full" aria-hidden="true" />
                 <div className="w-3 h-3 bg-yellow-500 rounded-full" aria-hidden="true" />
@@ -99,7 +99,9 @@ export function HeroSection({ y }: HeroSectionProps) {
                 <div className="text-muted-foreground ml-4">✨ Analyzing market positioning...</div>
                 <div className="text-muted-foreground ml-4">📊 Creating go-to-market framework...</div>
                 <div className="text-muted-foreground ml-4">🎯 Developing content strategy...</div>
-                <div className="text-purple-400 font-medium">✅ Complete launch roadmap ready with actionable steps</div>
+                <div className="text-purple-400 font-medium">
+                  ✅ Complete launch roadmap ready with actionable steps
+                </div>
               </div>
             </div>
             <figcaption className="sr-only">

@@ -1,7 +1,7 @@
 "use client"
 
 import { motion } from "framer-motion"
-import { Brain, Lightbulb, Code, Search, FileText, BarChart3 } from 'lucide-react'
+import { Brain, Lightbulb, Code, Search, FileText, BarChart3 } from "lucide-react"
 import { Card, CardContent } from "@/components/ui/card"
 
 export function CopilotShowcase() {
@@ -70,16 +70,16 @@ export function CopilotShowcase() {
               whileHover={{ y: -5 }}
               className="group"
             >
-              <Card className="bg-secondary/50 backdrop-blur-sm border-border hover:border-purple-600 transition-all duration-300 h-full">
+              <Card className="glass-effect hover:border-purple-600 transition-all duration-300 h-full hover-lift">
                 <CardContent className="p-6 lg:p-8">
-                  <div className="w-12 h-12 bg-gradient-to-r from-purple-500 to-purple-700 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                  <div className="w-12 h-12 bg-gradient-to-r from-purple-500 to-purple-700 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform modern-shadow">
                     <capability.icon className="w-6 h-6 text-white" />
                   </div>
                   <h3 className="text-xl md:text-2xl font-semibold mb-4 tracking-tight">{capability.title}</h3>
-                  <p className="text-muted-foreground mb-6 leading-relaxed font-light">{capability.description}</p>
-                  <div className="bg-background/50 rounded-lg p-4 border border-border">
+                  <p className="text-muted-foreground mb-6 leading-relaxed font-normal">{capability.description}</p>
+                  <div className="glass-effect rounded-lg p-4">
                     <p className="text-sm text-purple-400 font-medium mb-2">Example:</p>
-                    <p className="text-sm text-muted-foreground font-light leading-relaxed">{capability.example}</p>
+                    <p className="text-sm text-muted-foreground font-normal leading-relaxed">{capability.example}</p>
                   </div>
                 </CardContent>
               </Card>

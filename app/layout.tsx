@@ -1,23 +1,16 @@
 import type React from "react"
 import type { Metadata } from "next"
-import { Inter, Instrument_Serif } from 'next/font/google'
+import { Instrument_Sans } from "next/font/google"
 import "./globals.css"
 import { ThemeProvider } from "@/components/theme-provider"
 import { GoogleAnalytics } from "@/components/analytics"
 import { Suspense } from "react"
 
-const inter = Inter({
+const instrumentSans = Instrument_Sans({
   subsets: ["latin"],
-  weight: ["300", "400", "500", "600", "700"],
+  weight: ["400", "500", "600", "700"],
   display: "swap",
-  variable: "--font-inter",
-})
-
-const instrumentSerif = Instrument_Serif({
-  subsets: ["latin"],
-  weight: ["400"],
-  display: "swap",
-  variable: "--font-instrument-serif",
+  variable: "--font-instrument-sans",
 })
 
 export const metadata: Metadata = {
@@ -98,7 +91,7 @@ export const metadata: Metadata = {
   verification: {
     google: "your-google-verification-code",
   },
-    generator: 'v0.dev'
+    generator: 'v0.app'
 }
 
 export default function RootLayout({
@@ -107,7 +100,7 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en" suppressHydrationWarning className={`${inter.variable} ${instrumentSerif.variable}`}>
+    <html lang="en" suppressHydrationWarning className={instrumentSans.variable}>
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
@@ -117,7 +110,7 @@ export default function RootLayout({
           <GoogleAnalytics />
         </Suspense>
       </head>
-      <body className={`${inter.variable} font-sans`}>
+      <body className={`${instrumentSans.variable} font-sans`}>
         <ThemeProvider attribute="class" defaultTheme="dark" enableSystem disableTransitionOnChange>
           <Suspense fallback={null}>{children}</Suspense>
         </ThemeProvider>
