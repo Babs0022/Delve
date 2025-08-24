@@ -111,7 +111,7 @@ export default function RootLayout({
         </Suspense>
       </head>
       <body className={`${instrumentSans.variable} font-sans`}>
-        <ThemeProvider attribute="class" defaultTheme="dark" enableSystem disableTransitionOnChange>
+        <ThemeProvider attribute="class" defaultTheme="light" enableSystem disableTransitionOnChange>
           <Suspense fallback={null}>{children}</Suspense>
         </ThemeProvider>
       </body>
