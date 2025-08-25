@@ -1,63 +1,80 @@
 "use client"
 
 import { motion } from "framer-motion"
-import { Brain, MessageSquare, Target } from 'lucide-react'
+import { AlertTriangle, Clock, Zap, Target } from "lucide-react"
 
 export function ProblemStatement() {
   const problems = [
     {
-      icon: Brain,
-      title: "Generic AI Responses",
-      description: "Most AI tools give cookie-cutter answers that don't understand your specific context or goals",
+      icon: Clock,
+      title: "Hours Wasted on Repetitive Tasks",
+      description:
+        "Developers and creators spend 60% of their time on boilerplate code and mundane content creation instead of innovation.",
+      stat: "60% time wasted",
     },
     {
-      icon: MessageSquare,
-      title: "Fragmented Workflow",
-      description: "Jumping between multiple tools for brainstorming, coding, research, and content creation",
+      icon: AlertTriangle,
+      title: "Generic AI Tools Fall Short",
+      description:
+        "ChatGPT and Claude give generic responses that require extensive editing and lack strategic thinking.",
+      stat: "80% need editing",
     },
     {
       icon: Target,
+      title: "Context Gets Lost",
+      description: "Most AI tools forget your project context, forcing you to re-explain requirements repeatedly.",
+      stat: "5x repetition",
+    },
+    {
+      icon: Zap,
+      title: "No Strategic Thinking",
       description:
-        "AI that executes tasks but doesn't help you think through the bigger picture or guide your decisions",
+        "Current AI assistants execute tasks but can't think strategically about your business goals and user needs.",
+      stat: "0% strategy",
     },
   ]
 
   return (
-    <section id="problem" className="py-20 lg:py-32 bg-background">
-      <div className="container mx-auto px-4 text-center">
-        <motion.h2
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6 tracking-tight"
-        >
-          Most AI assistants are just glorified search engines
-        </motion.h2>
-        <motion.p
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.1 }}
-          className="text-lg md:text-xl text-muted-foreground mb-16 max-w-3xl mx-auto leading-relaxed font-light"
-        >
-          They lack the strategic thinking and contextual understanding you need to truly accelerate your work
-        </motion.p>
+    <section id="problem" className="py-24 bg-gradient-to-b from-gray-50 to-white">
+      <div className="container mx-auto px-4">
+        <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} className="text-center mb-20">
+          <h2 className="text-4xl md:text-6xl font-bold mb-6 text-gray-900">The $120B Problem</h2>
+          <p className="text-xl md:text-2xl text-gray-600 max-w-4xl mx-auto leading-relaxed">
+            Businesses lose <span className="text-red-600 font-semibold">$120 billion annually</span> due to inefficient
+            development and content creation processes. Here's why current solutions fail:
+          </p>
+        </motion.div>
 
-        <div className="grid md:grid-cols-3 gap-8 lg:gap-12 mt-12">
+        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
           {problems.map((problem, index) => (
             <motion.div
               key={index}
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
-              transition={{ delay: index * 0.2 }}
-              className="text-center"
+              transition={{ delay: index * 0.1 }}
+              className="bg-white rounded-2xl p-8 shadow-lg border border-gray-200 hover:shadow-xl transition-all duration-300 hover:-translate-y-2"
             >
-              <div className="w-16 h-16 bg-purple-500/20 rounded-full flex items-center justify-center mx-auto mb-6">
-                <problem.icon className="w-8 h-8 text-purple-400" />
+              <div className="bg-red-100 w-16 h-16 rounded-xl flex items-center justify-center mb-6">
+                <problem.icon className="w-8 h-8 text-red-600" />
               </div>
-              <h3 className="text-xl md:text-2xl font-semibold mb-4 tracking-tight">{problem.title}</h3>
-              <p className="text-muted-foreground leading-relaxed font-light">{problem.description}</p>
+              <div className="text-3xl font-bold text-red-600 mb-3">{problem.stat}</div>
+              <h3 className="text-xl font-semibold mb-4 text-gray-900">{problem.title}</h3>
+              <p className="text-gray-600 leading-relaxed">{problem.description}</p>
             </motion.div>
           ))}
         </div>
+
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          className="text-center mt-16 bg-gradient-to-r from-purple-600 to-blue-600 rounded-2xl p-8 text-white"
+        >
+          <h3 className="text-2xl md:text-3xl font-bold mb-4">What if there was a better way?</h3>
+          <p className="text-lg md:text-xl opacity-90 max-w-3xl mx-auto">
+            Imagine an AI that understands your context, thinks strategically about your goals, and delivers
+            production-ready results that require zero editing.
+          </p>
+        </motion.div>
       </div>
     </section>
   )
