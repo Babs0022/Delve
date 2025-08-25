@@ -1,7 +1,6 @@
 "use client"
 
 import { motion } from "framer-motion"
-import { Menu, X } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
 import { ThemeToggle } from "@/components/theme-toggle"
@@ -13,14 +12,6 @@ interface HeaderProps {
 }
 
 export function Header({ isMenuOpen, setIsMenuOpen }: HeaderProps) {
-  const handleNavClick = (section: string) => {
-    trackEvent("navigation_click", {
-      event_category: "navigation",
-      event_label: section,
-      page_location: "header",
-    })
-  }
-
   const handleLoginClick = () => {
     trackEvent("login_attempt", {
       event_category: "authentication",
@@ -61,52 +52,7 @@ export function Header({ isMenuOpen, setIsMenuOpen }: HeaderProps) {
           </span>
         </Link>
 
-        <nav className="hidden md:flex items-center space-x-6">
-          <a
-            href="#problem"
-            className="text-gray-600 hover:text-purple-600 transition-colors font-medium text-sm"
-            onClick={() => handleNavClick("problem")}
-          >
-            Problem
-          </a>
-          <a
-            href="#copilot"
-            className="text-gray-600 hover:text-purple-600 transition-colors font-medium text-sm"
-            onClick={() => handleNavClick("copilot")}
-          >
-            Copilot
-          </a>
-          <a
-            href="#tools"
-            className="text-gray-600 hover:text-purple-600 transition-colors font-medium text-sm"
-            onClick={() => handleNavClick("tools")}
-          >
-            Tools
-          </a>
-          <a
-            href="#solutions"
-            className="text-gray-600 hover:text-purple-600 transition-colors font-medium text-sm"
-            onClick={() => handleNavClick("solutions")}
-          >
-            Solutions
-          </a>
-          <Link
-            href="/pricing"
-            className="text-gray-600 hover:text-purple-600 transition-colors font-medium text-sm"
-            onClick={() => handleNavClick("pricing")}
-          >
-            Pricing
-          </Link>
-          <a
-            href="#faq"
-            className="text-gray-600 hover:text-purple-600 transition-colors font-medium text-sm"
-            onClick={() => handleNavClick("faq")}
-          >
-            FAQ
-          </a>
-        </nav>
-
-        <div className="hidden md:flex items-center space-x-4">
+        <div className="flex items-center space-x-4">
           <Button asChild variant="ghost" className="text-gray-600 hover:text-gray-900 hover:bg-gray-100 font-medium">
             <a
               href="https://app.korbinai.com/login"
@@ -127,97 +73,12 @@ export function Header({ isMenuOpen, setIsMenuOpen }: HeaderProps) {
               rel="noopener noreferrer"
               onClick={handleSignUpClick}
             >
-              Sign Up
+              Get Started Free
             </a>
           </Button>
           <ThemeToggle />
         </div>
-
-        <button className="md:hidden text-gray-600" onClick={() => setIsMenuOpen(!isMenuOpen)}>
-          {isMenuOpen ? <X /> : <Menu />}
-        </button>
       </div>
-
-      {isMenuOpen && (
-        <motion.div
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="md:hidden bg-white border-t border-gray-200"
-        >
-          <div className="container mx-auto px-4 py-4 space-y-4">
-            <a
-              href="#problem"
-              className="block text-gray-600 hover:text-purple-600 transition-colors font-medium"
-              onClick={() => handleNavClick("problem")}
-            >
-              Problem
-            </a>
-            <a
-              href="#copilot"
-              className="block text-gray-600 hover:text-purple-600 transition-colors font-medium"
-              onClick={() => handleNavClick("copilot")}
-            >
-              Copilot
-            </a>
-            <a
-              href="#tools"
-              className="block text-gray-600 hover:text-purple-600 transition-colors font-medium"
-              onClick={() => handleNavClick("tools")}
-            >
-              Tools
-            </a>
-            <a
-              href="#solutions"
-              className="block text-gray-600 hover:text-purple-600 transition-colors font-medium"
-              onClick={() => handleNavClick("solutions")}
-            >
-              Solutions
-            </a>
-            <Link
-              href="/pricing"
-              className="block text-gray-600 hover:text-purple-600 transition-colors font-medium"
-              onClick={() => handleNavClick("pricing")}
-            >
-              Pricing
-            </Link>
-            <a
-              href="#faq"
-              className="block text-gray-600 hover:text-purple-600 transition-colors font-medium"
-              onClick={() => handleNavClick("faq")}
-            >
-              FAQ
-            </a>
-            <Button
-              asChild
-              variant="ghost"
-              className="w-full text-gray-600 hover:text-gray-900 hover:bg-gray-100 font-medium"
-            >
-              <a
-                href="https://app.korbinai.com/login"
-                target="_blank"
-                rel="noopener noreferrer"
-                onClick={handleLoginClick}
-              >
-                Login
-              </a>
-            </Button>
-            <Button
-              asChild
-              className="w-full bg-gradient-to-r from-purple-600 to-purple-700 hover:from-purple-700 hover:to-purple-800 text-white font-medium border-0"
-            >
-              <a
-                href="https://app.korbinai.com/signup"
-                target="_blank"
-                rel="noopener noreferrer"
-                onClick={handleSignUpClick}
-              >
-                Sign Up
-              </a>
-            </Button>
-            <ThemeToggle />
-          </div>
-        </motion.div>
-      )}
     </motion.header>
   )
 }

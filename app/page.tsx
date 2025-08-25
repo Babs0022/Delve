@@ -7,7 +7,6 @@ import { Header } from "./components/header"
 import { HeroSection } from "./components/hero-section"
 import { ProblemStatement } from "./components/problem-statement"
 import { CopilotShowcase } from "./components/copilot-showcase"
-import { SpecializedTools } from "./components/specialized-tools"
 import { UseCases } from "./components/use-cases"
 import { Testimonials } from "./components/testimonials"
 import { FAQ } from "./components/faq"
@@ -82,10 +81,8 @@ export default function LandingPage() {
           <HeroSection y={y} />
           <ProblemStatement />
           <CopilotShowcase />
-          <SpecializedTools />
           <UseCases />
           <Testimonials />
-          {/* The Pricing section is now on its own page */}
           <FAQ />
           <FinalCTA />
         </main>

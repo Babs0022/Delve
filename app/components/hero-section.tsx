@@ -65,10 +65,10 @@ export function HeroSection({ y }: HeroSectionProps) {
                 href="https://app.korbinai.com"
                 target="_blank"
                 rel="noopener noreferrer"
-                aria-label="Experience KorbinAI Copilot - Free trial"
+                aria-label="Get Started Free with KorbinAI"
                 onClick={handleCTAClick}
               >
-                Experience the Copilot
+                Get Started Free
                 <ArrowRight className="ml-2 w-5 h-5" aria-hidden="true" />
               </a>
             </Button>
