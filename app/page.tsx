@@ -8,7 +8,6 @@ import { HeroSection } from "./components/hero-section"
 import { ProblemStatement } from "./components/problem-statement"
 import { CopilotShowcase } from "./components/copilot-showcase"
 import { SpecializedTools } from "./components/specialized-tools"
-import { ComparisonTable } from "./components/comparison-table"
 import { UseCases } from "./components/use-cases"
 import { Testimonials } from "./components/testimonials"
 import { FAQ } from "./components/faq"
@@ -84,7 +83,6 @@ export default function LandingPage() {
           <ProblemStatement />
           <CopilotShowcase />
           <SpecializedTools />
-          <ComparisonTable />
           <UseCases />
           <Testimonials />
           {/* The Pricing section is now on its own page */}
