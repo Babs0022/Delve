@@ -27,9 +27,7 @@ export function FinalCTA() {
           <div className="bg-gradient-to-br from-secondary to-background rounded-2xl border border-border p-8 shadow-lg">
             <h2 className="text-2xl md:text-3xl font-medium mb-4">
               Join 50+ creators building faster with{" "}
-              <span className="bg-gradient-to-r from-purple-400 to-purple-600 bg-clip-text text-transparent">
-                KorbinAI
-              </span>
+              <span className="bg-gradient-to-r from-blue-600 to-blue-700 bg-clip-text text-transparent">KorbinAI</span>
             </h2>
             <p className="text-lg text-muted-foreground mb-6 max-w-2xl mx-auto">
               Start your free trial today and experience the future of component generation and content creation.
@@ -37,7 +35,7 @@ export function FinalCTA() {
             <Button
               asChild
               size="lg"
-              className="bg-gradient-to-r from-purple-500 to-purple-700 hover:from-purple-600 hover:to-purple-800 text-xl px-12 py-6"
+              className="bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-xl px-12 py-6"
             >
               <a
                 href="https://app.korbinai.com"
